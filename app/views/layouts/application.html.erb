@@ -42,7 +42,8 @@
       <div class="row">
         <div class="col-md-12">
           <% flash.each do |key, message| %>
-            <div class="text-center alert alert-<%= key == 'notice'? 'success': 'danger'%>">
+            <div class="text-center alert alert-<%= key %> alert-dismissable fade in">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
               <%= message %>
             </div>
           <% end %>
