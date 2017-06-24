@@ -8,7 +8,7 @@ RSpec.feature "Listing Articles" do
     @article_2 = Article.create(title: "Second Article", body: "This is my second test article", user: @john)
   end
   
-  scenario "A user lists all articles" do
+  scenario "with articles created and user not signed in" do
     visit "/"
     
     expect(page).to have_content(@article_1.title)
@@ -17,6 +17,21 @@ RSpec.feature "Listing Articles" do
     expect(page).to have_content(@article_2.body)
     expect(page).to have_link(@article_1.title)
     expect(page).to have_link(@article_2.title)
+    expect(page).not_to have_link("New Article")
+  end
+  
+  scenario "with articles created and user signed in" do
+    login_as(@john)
+    
+    visit "/"
+    
+    expect(page).to have_content(@article_1.title)
+    expect(page).to have_content(@article_1.body)
+    expect(page).to have_content(@article_2.title)
+    expect(page).to have_content(@article_2.body)
+    expect(page).to have_link(@article_1.title)
+    expect(page).to have_link(@article_2.title)
+    expect(page).to have_link("New Article")
   end
   
   scenario "A user has no articles" do
